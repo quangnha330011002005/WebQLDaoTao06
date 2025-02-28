@@ -18,6 +18,25 @@ namespace WebQLDaoTao
             //    //Liên kết dữ liệu cho gvSinhVien
             //    LienKetDuLieu();
             //}
+            if (!IsPostBack)
+            {
+                if (Session["VaiTro"] == null)
+                {
+                    Response.Redirect("Login.aspx"); // Nếu chưa đăng nhập thì về trang Login
+                }
+                SetPermissions();
+            }
+        }
+
+        private void SetPermissions()
+        {
+            string role = Session["VaiTro"] != null ? Session["VaiTro"].ToString() : "Khach";
+
+            if (role == "Khach")
+            {
+                Response.Write("<script>alert('Bạn cần được cấp quyền vào trang này!'); window.location='Default.aspx';</script>");
+
+            }
         }
 
         private void LienKetDuLieu()

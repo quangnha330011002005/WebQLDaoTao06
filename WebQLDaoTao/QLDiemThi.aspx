@@ -9,7 +9,7 @@
             DataTextField="TenMH" DataValueField="MaMH" AutoPostBack="True"></asp:DropDownList>
     </div>
     <asp:GridView ID="gvKetQua" runat="server" AutoGenerateColumns="False" 
-        DataSourceID="odsKetQua" CssClass="table table-bordered" Width="70%" DataKeyNames="Id">
+        DataSourceID="odsKetQua" CssClass="table table-bordered" Width="70%" DataKeyNames="Id" OnRowDataBound="gvKetQua_RowDataBound">
         <Columns>
             <asp:BoundField DataField="MaSV" HeaderText="MaSV" ControlStyle-Width="80px" />
             <asp:BoundField DataField="Hotensv" HeaderText="Họ tên sinh viên" ControlStyle-Width="80px" SortExpression="MaSV" />
@@ -17,10 +17,30 @@
                 <ItemTemplate>
                     <asp:TextBox ID="txtDiem" runat="server" Text='<%# Eval("Diem") %>'></asp:TextBox>
                 </ItemTemplate>
+               <%-- <FooterTemplate>
+                    <asp:Button ID="btnLuu" runat="server" Text="Lưu" CssClass="btn btn-primary" OnClick="btnLuu_Click" />
+                </FooterTemplate>--%>
+            </asp:TemplateField>
+             <asp:TemplateField HeaderText="Tác Vụ Xóa">
+                <HeaderTemplate>
+                    <asp:CheckBox ID="chkAll" runat="server" AutoPostBack="true" OnCheckedChanged="chkAll_CheckedChanged" />
+                </HeaderTemplate>
+                <ItemTemplate>
+                    <asp:CheckBox ID="chkRow" runat="server" />
+                </ItemTemplate>
+                <%-- <FooterTemplate>
+                    <asp:Button ID="btnDelete" runat="server" Text="Xóa đã chọn" CssClass="btn btn-danger" OnClick="btnDelete_Click1" />
+                </FooterTemplate>--%>
             </asp:TemplateField>
         </Columns>
+        <EmptyDataTemplate>
+            <div class="alert alert-warning">
+                Hiện không có sinh viên đăng ký học phần này
+            </div>
+        </EmptyDataTemplate>
     </asp:GridView>
-    <asp:Button ID="btLuu" runat="server" Text="Lưu" OnClick="btLuu_Click" />
+    <asp:Button ID="btnLuu" runat="server" Text="Lưu" CssClass="btn btn-primary" OnClick="btnLuu_Click" />
+     <asp:Button ID="btnDelete" runat="server" Text="Xóa đã chọn" CssClass="btn btn-danger" OnClick="btnDelete_Click1" />
     <asp:ObjectDataSource ID="odsKetQua" runat="server" SelectMethod="getByMaMH" TypeName="WebQLDaoTao.Models.KetQuaDAO">
         <SelectParameters>
             <asp:ControlParameter ControlID="ddlMonHoc" Name="mamh" PropertyName="SelectedValue" Type="String" />

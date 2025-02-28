@@ -59,7 +59,7 @@ SqlConnection(ConfigurationManager.ConnectionStrings["QLDaoTao_ConStr"].Connecti
         {
             //1.Mo ket noi CSDL
             SqlConnection conn = new
-            SqlConnection(ConfigurationManager.ConnectionStrings["WebQLDaoTao_ConStr"].ConnectionString);
+            SqlConnection(ConfigurationManager.ConnectionStrings["QLDaoTao_ConStr"].ConnectionString);
             conn.Open();
             //2.tao truy van
             SqlCommand cmd = new SqlCommand("delete from monhoc where mamh=@mamh", conn);
@@ -72,7 +72,7 @@ SqlConnection(ConfigurationManager.ConnectionStrings["QLDaoTao_ConStr"].Connecti
         {
             //1.Mo ket noi CSDL
             SqlConnection conn = new
-            SqlConnection(ConfigurationManager.ConnectionStrings["WebQLDaoTao_ConStr"].ConnectionString);
+            SqlConnection(ConfigurationManager.ConnectionStrings["QLDaoTao_ConStr"].ConnectionString);
             conn.Open();
             //2.tao truy van
             SqlCommand cmd = new SqlCommand("insert into monhoc (mamh, tenmh,sotiet) values (@mamh,@tenmh,@sotiet)", conn);
@@ -88,7 +88,7 @@ SqlConnection(ConfigurationManager.ConnectionStrings["QLDaoTao_ConStr"].Connecti
             MonHoc kq = null;
             //1.Mo ket noi CSDL
             SqlConnection conn = new
-            SqlConnection(ConfigurationManager.ConnectionStrings["WebQLDaoTao_ConStr"].ConnectionString);
+            SqlConnection(ConfigurationManager.ConnectionStrings["QLDaoTao_ConStr"].ConnectionString);
             conn.Open();
             //2.tao truy van
             SqlCommand cmd = new SqlCommand("select * from Monhoc where mamh=@mamh", conn);

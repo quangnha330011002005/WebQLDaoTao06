@@ -36,7 +36,7 @@ namespace WebQLDaoTao.Models
             return dsKhoa;
         }
         //--------phuong thuc cap nhat thong tin khoa-----------------
-        public int Update(string makh, string tenkh)
+        public int Update(Khoa khoa)
         {
             //1.Mo ket noi CSDL
             SqlConnection conn = new
@@ -44,8 +44,8 @@ namespace WebQLDaoTao.Models
             conn.Open();
             //2.tao truy van
             SqlCommand cmd = new SqlCommand("update khoa set tenkh=@tenkh where makh=@makh", conn);
-            cmd.Parameters.AddWithValue("@tenkh", tenkh);
-            cmd.Parameters.AddWithValue("@makh", makh);
+            cmd.Parameters.AddWithValue("@tenkh", khoa.TenKH);
+            cmd.Parameters.AddWithValue("@makh", khoa.MaKH);
             //3.thuc thi ket qua;
             return cmd.ExecuteNonQuery();
         }

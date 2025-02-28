@@ -95,10 +95,14 @@
                         </asp:DropDownList>
                     </EditItemTemplate>
                 </asp:TemplateField>
-                <asp:CommandField ShowEditButton="true" ShowDeleteButton="true" ButtonType="Image"
-                    EditImageUrl="~/Contents/Images/Images/edit.gif" DeleteImageUrl="~/Contents/Images/Images/delete.gif"
-                    UpdateImageUrl="~/Contents/Images/Images/OK.gif" CancelImageUrl="~/Contents/Images/Images/cancel.gif"
-                    ItemStyle-Wrap="false" />
+                <asp:TemplateField HeaderText="Chức năng">
+                    <ItemTemplate>
+                        <asp:Panel ID="pnlChucNang" runat="server">
+                            <asp:ImageButton ID="btnEdit" runat="server" ImageUrl="~/Contents/Images/Images/edit.gif" CommandName="Edit" />
+                            <asp:ImageButton ID="btnDelete" runat="server" ImageUrl="~/Contents/Images/Images/delete.gif" CommandName="Delete" OnClientClick="return confirm('Bạn có chắc chắn muốn xóa?');" />
+                        </asp:Panel>
+                    </ItemTemplate>
+                </asp:TemplateField>
             </Columns>
             <PagerStyle CssClass="pager-style" HorizontalAlign="Center" />
         </asp:GridView>
