@@ -19,17 +19,36 @@ namespace WebQLDaoTao
         {
             string username = txtUsername.Text.Trim();
             string password = txtPassword.Text;
-            string vaitro = "Khach"; // ✅ Gán vai trò mặc định là Khach
+            string confirmPassword = txtConfirmPassword.Text;
+            string vaitro = "Khach"; // ✅ Gán vai trò mặc định là Khách
 
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(confirmPassword))
             {
                 lblMessage.Text = "Vui lòng nhập đầy đủ thông tin.";
                 lblMessage.ForeColor = System.Drawing.Color.Red;
                 return;
             }
 
-            TaiKhoan newUser = new TaiKhoan(username, password, vaitro);
+            // Kiểm tra mật khẩu xác nhận
+            if (password != confirmPassword)
+            {
+                lblMessage.Text = "Mật khẩu xác nhận không khớp.";
+                lblMessage.ForeColor = System.Drawing.Color.Red;
+                return;
+            }
+
             TaiKhoanDAO dao = new TaiKhoanDAO();
+
+            // 🛑 Kiểm tra tài khoản đã tồn tại chưa
+            if (dao.KiemTraTonTai(username))
+            {
+                lblMessage.Text = "Tài khoản đã tồn tại. Vui lòng chọn tên khác!";
+                lblMessage.ForeColor = System.Drawing.Color.Red;
+                return;
+            }
+
+            // Nếu chưa tồn tại, thực hiện đăng ký
+            TaiKhoan newUser = new TaiKhoan(username, password, vaitro);
 
             if (dao.DangKyTaiKhoan(newUser))
             {
@@ -39,9 +58,62 @@ namespace WebQLDaoTao
             }
             else
             {
-                lblMessage.Text = "Đăng ký thất bại. Vui lòng thử lại.";
+                lblMessage.Text = "Có lỗi xảy ra. Vui lòng thử lại!";
                 lblMessage.ForeColor = System.Drawing.Color.Red;
             }
+        }
+
+        protected void btnRegister_Click1(object sender, EventArgs e)
+        {
+            string username = txtUsername.Text.Trim();
+            string password = txtPassword.Text;
+            string confirmPassword = txtConfirmPassword.Text;
+            string vaitro = "Khach"; // ✅ Gán vai trò mặc định là Khách
+
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(confirmPassword))
+            {
+                lblMessage.Text = "Vui lòng nhập đầy đủ thông tin.";
+                lblMessage.ForeColor = System.Drawing.Color.Red;
+                return;
+            }
+
+            // Kiểm tra mật khẩu xác nhận
+            if (password != confirmPassword)
+            {
+                lblMessage.Text = "Mật khẩu xác nhận không khớp.";
+                lblMessage.ForeColor = System.Drawing.Color.Red;
+                return;
+            }
+
+            TaiKhoanDAO dao = new TaiKhoanDAO();
+
+            // 🛑 Kiểm tra tài khoản đã tồn tại chưa
+            if (dao.KiemTraTonTai(username))
+            {
+                lblMessage.Text = "Tài khoản đã tồn tại. Vui lòng chọn tên khác!";
+                lblMessage.ForeColor = System.Drawing.Color.Red;
+                return;
+            }
+
+            // Nếu chưa tồn tại, thực hiện đăng ký
+            TaiKhoan newUser = new TaiKhoan(username, password, vaitro);
+
+            if (dao.DangKyTaiKhoan(newUser))
+            {
+                lblMessage.Text = "Đăng ký thành công!";
+                lblMessage.ForeColor = System.Drawing.Color.Green;
+                Response.Redirect("~/Login.aspx");
+            }
+            else
+            {
+                lblMessage.Text = "Có lỗi xảy ra. Vui lòng thử lại!";
+                lblMessage.ForeColor = System.Drawing.Color.Red;
+            }
+        }
+
+        protected void btnRegister_Click2(object sender, EventArgs e)
+        {
+
         }
     }
 }

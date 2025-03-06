@@ -1,151 +1,155 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ForgotPassword.aspx.cs" Inherits="WebQLDaoTao.ForgotPassword" %>
 
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title>Quên Mật Khẩu 🌹</title>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quên Mật Khẩu - Cosmic Ripple</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
         body {
-           font-family: Arial, sans-serif;
-    background-color: #FFE4E1; /* Màu nền kem nhạt */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+            display: flex; justify-content: center; align-items: center;
+            height: 100vh; background: black;
+            overflow: hidden;
+            position: relative;
         }
-
         .container {
-            width: 400px;
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative; width: 350px; padding: 20px;
+            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px);
+            border-radius: 15px; box-shadow: 0 0 15px cyan;
             text-align: center;
+            z-index: 2;
         }
-
         h2 {
-            margin-bottom: 20px;
-            color: #333;
+            color: cyan; margin-bottom: 20px; text-shadow: 0 0 10px cyan;
         }
-
-        label {
-            display: block;
-            text-align: left;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #555;
+        .input-box {
+            position: relative; margin-bottom: 20px;
         }
-
-        input[type="text"], input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
+        .input-box input, .aspNetTextBox {
+            width: 100%; padding: 10px; border: none; outline: none;
+            background: transparent; border-bottom: 2px solid cyan;
+            color: cyan; font-size: 16px;
         }
-
-        input[type="text"]:focus, input[type="password"]:focus {
-            border-color: #007BFF;
-            outline: none;
+        .btn, .aspNetButton {
+            width: 100%; padding: 10px; border: none;
+            background: cyan; color: black; font-size: 16px;
+            cursor: pointer; box-shadow: 0 0 15px cyan;
         }
-
-        .btn {
-            width: 100%;
-            background-color: #007BFF;
-            color: white;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
+        .btn:hover, .aspNetButton:hover {
+            background: white; box-shadow: 0 0 25px white;
         }
-
-        .btn:hover {
-            background-color: #0056b3;
-        }
-
-        .message {
-            margin-top: 10px;
-            font-size: 14px;
-        }
-
-        .message.success {
-            color: green;
-        }
-
-        .message.error {
-            color: red;
-        }
-
-        .back-link {
-            display: block;
+        .links {
             margin-top: 15px;
-            color: #007BFF;
+            color: cyan;
+        }
+        .links a {
+            color: cyan;
             text-decoration: none;
         }
-
-        .back-link:hover {
+        .links a:hover {
             text-decoration: underline;
         }
-         /* Lá rơi */
- .leaf {
-     position: absolute;
-     top: -50px;
-     color: #e91e63;
-     font-size: 1.5em;
-     pointer-events: none;
-     animation: fall linear infinite;
- }
-
- @keyframes fall {
-     0% {
-         transform: translateY(0) rotate(0deg);
-         opacity: 1;
-     }
-     100% {
-         transform: translateY(100vh) rotate(360deg);
-         opacity: 0;
-     }
- }
+        canvas {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1;
+        }
+        .music-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 20px;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px cyan;
+        }
+        .music-button:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
     </style>
 </head>
 <body>
+    <canvas id="cosmicCanvas"></canvas>
+    <audio id="backgroundMusic" loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-slowmotion.mp3" type="audio/mpeg">
+    </audio>
+    <button id="musicToggle" class="music-button">
+        <i class="fa fa-music"></i>
+    </button>
     <form id="form1" runat="server">
         <div class="container">
-            <h2>Quên Mật Khẩu🌹</h2>
-
-            <asp:Label ID="lblUsername" runat="server" Text="Tên đăng nhập:"></asp:Label>
-            <asp:TextBox ID="txtUsername" runat="server"></asp:TextBox>
-
-            <asp:Label ID="lblNewPassword" runat="server" Text="Mật khẩu mới:"></asp:Label>
-            <asp:TextBox ID="txtNewPassword" runat="server" TextMode="Password"></asp:TextBox>
-
-            <asp:Label ID="lblConfirmPassword" runat="server" Text="Xác nhận mật khẩu:"></asp:Label>
-            <asp:TextBox ID="txtConfirmPassword" runat="server" TextMode="Password"></asp:TextBox>
-
-            <asp:Button ID="btnResetPassword" runat="server" Text="Đặt lại mật khẩu" CssClass="btn" OnClick="btnResetPassword_Click" />
-
-            <asp:Label ID="lblMessage" runat="server" CssClass="message"></asp:Label>
-
-            <asp:HyperLink ID="lnkLogin" runat="server" NavigateUrl="Login.aspx" CssClass="back-link">Quay lại đăng nhập</asp:HyperLink>
+            <h2>Quên Mật Khẩu</h2>
+            <div class="input-box">
+                <asp:TextBox ID="txtUsername" runat="server" CssClass="aspNetTextBox" placeholder="Tên đăng nhập"></asp:TextBox>
+            </div>
+            <div class="input-box">
+                <asp:TextBox ID="txtNewPassword" runat="server" TextMode="Password" CssClass="aspNetTextBox" placeholder="Mật khẩu mới"></asp:TextBox>
+            </div>
+            <div class="input-box">
+                <asp:TextBox ID="txtConfirmPassword" runat="server" TextMode="Password" CssClass="aspNetTextBox" placeholder="Xác nhận mật khẩu"></asp:TextBox>
+            </div>
+            <asp:Button ID="btnResetPassword" runat="server" Text="Đặt lại mật khẩu" CssClass="aspNetButton" OnClick="btnResetPassword_Click" />
+            <div class="links"> 
+                <asp:Label ID="lblMessage" runat="server" CssClass="message"></asp:Label>
+                <p><a href="Login.aspx">Quay lại đăng nhập</a></p>
+            </div>
         </div>
     </form>
-     <script>
-     const leafCount = 50; // Số lượng hoa rơi
-     const container = document.body;
+    <script>
+        const canvas = document.getElementById("cosmicCanvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-     for (let i = 0; i < leafCount; i++) {
-         const leaf = document.createElement("div");
-         leaf.classList.add("leaf");
-         leaf.textContent = "🌹"; // Biểu tượng hoa
-         leaf.style.left = Math.random() * 100 + "vw";
-         leaf.style.animationDuration = Math.random() * 5 + 5 + "s";
-         leaf.style.fontSize = Math.random() * 1.5 + 1 + "em";
-         leaf.style.opacity = Math.random();
-         container.appendChild(leaf);
-     }
-     </script>
+        let ripples = [];
+        window.addEventListener("mousemove", function (e) {
+            ripples.push({ x: e.clientX, y: e.clientY, radius: 0 });
+        });
+
+        function drawCosmic() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ripples.forEach((ripple, index) => {
+                ctx.beginPath();
+                ctx.arc(ripple.x, ripple.y, ripple.radius, 0, Math.PI * 2);
+                ctx.strokeStyle = `rgba(0, 255, 255, ${1 - ripple.radius / 100})`;
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                ripple.radius += 2;
+                if (ripple.radius > 100) ripples.splice(index, 1);
+            });
+        }
+
+        function animateCosmic() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawCosmic();
+            requestAnimationFrame(animateCosmic);
+        }
+        animateCosmic();
+
+        const music = document.getElementById("backgroundMusic");
+        const musicButton = document.getElementById("musicToggle");
+        music.volume = 0.2;
+
+        musicButton.addEventListener("click", () => {
+            if (music.paused) {
+                music.play();
+                musicButton.innerHTML = '<i class="fa fa-pause"></i>';
+            } else {
+                music.pause();
+                musicButton.innerHTML = '<i class="fa fa-music"></i>';
+            }
+        });
+
+    </script>
 </body>
 </html>

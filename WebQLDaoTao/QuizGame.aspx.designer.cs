@@ -11,7 +11,7 @@ namespace WebQLDaoTao
 {
 
 
-    public partial class ForgotPassword
+    public partial class QuizGame
     {
 
         /// <summary>
@@ -24,40 +24,40 @@ namespace WebQLDaoTao
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
-        /// txtUsername control.
+        /// btnBack control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtUsername;
+        protected global::System.Web.UI.WebControls.Button btnBack;
 
         /// <summary>
-        /// txtNewPassword control.
+        /// txtGuess control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNewPassword;
+        protected global::System.Web.UI.WebControls.TextBox txtGuess;
 
         /// <summary>
-        /// txtConfirmPassword control.
+        /// btnGuess control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtConfirmPassword;
+        protected global::System.Web.UI.WebControls.Button btnGuess;
 
         /// <summary>
-        /// btnResetPassword control.
+        /// btnRestart control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnResetPassword;
+        protected global::System.Web.UI.WebControls.Button btnRestart;
 
         /// <summary>
         /// lblMessage control.
@@ -67,5 +67,41 @@ namespace WebQLDaoTao
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMessage;
+
+        /// <summary>
+        /// lblAttempts control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAttempts;
+
+        /// <summary>
+        /// lblHistory control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblHistory;
+
+        /// <summary>
+        /// lblXP control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblXP;
+
+        /// <summary>
+        /// lblLeaderboard control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblLeaderboard;
     }
 }

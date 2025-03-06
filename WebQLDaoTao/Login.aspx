@@ -1,126 +1,123 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="WebQLDaoTao.Login" %>
 
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title>Đăng Nhập 🌸</title>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fancy Login - Water Ripple</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
         body {
-            height: 100vh;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, #fce4ec, #f8bbd0);
-            font-family: Arial, sans-serif;
+            display: flex; justify-content: center; align-items: center;
+            height: 100vh; background: black;
             overflow: hidden;
             position: relative;
         }
-
+        .ripple-container {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/asfalt-light.png') repeat;
+        }
         .login-container {
-            background-color: #fff;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            position: relative; width: 350px; padding: 20px;
+            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px);
+            border-radius: 15px; box-shadow: 0 0 15px cyan;
             text-align: center;
-            z-index: 10;
+            z-index: 2;
         }
-
-        .login-container h2 {
-            color: #e91e63;
-            margin-bottom: 20px;
+        .login-reflection {
+            position: absolute;
+            width: 350px;
+            height: 100px;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) scaleY(-1);
+            opacity: 0.3;
+            background: rgba(0, 255, 255, 0.5);
+            filter: blur(10px);
         }
-
-        input[type="text"], input[type="password"], .aspNetTextBox {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
+        h2 {
+            color: cyan; margin-bottom: 20px; text-shadow: 0 0 10px cyan;
         }
-
-        .aspNetButton {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            background-color: #e91e63;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
+        .input-box {
+            position: relative; margin-bottom: 20px;
         }
-
-        .aspNetButton:hover {
-            background-color: #c2185b;
+        .input-box input, .aspNetTextBox {
+            width: 100%; padding: 10px; border: none; outline: none;
+            background: transparent; border-bottom: 2px solid cyan;
+            color: cyan; font-size: 16px;
         }
-
-        .error {
-            color: red;
-            margin-top: 10px;
+        .btn, .aspNetButton {
+            width: 100%; padding: 10px; border: none;
+            background: cyan; color: black; font-size: 16px;
+            cursor: pointer; box-shadow: 0 0 15px cyan;
         }
-
-        a {
-            color: #e91e63;
+        .btn:hover, .aspNetButton:hover {
+            background: white; box-shadow: 0 0 25px white;
+        }
+        .links {
+            margin-top: 15px;
+            color: cyan;
+        }
+        .links a {
+            color: cyan;
             text-decoration: none;
         }
-
-        a:hover {
+        .links a:hover {
             text-decoration: underline;
-        }
-
-        /* Lá rơi */
-        .leaf {
-            position: absolute;
-            top: -50px;
-            color: #e91e63;
-            font-size: 1.5em;
-            pointer-events: none;
-            animation: fall linear infinite;
-        }
-
-        @keyframes fall {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh) rotate(360deg);
-                opacity: 0;
-            }
         }
     </style>
 </head>
 <body>
+    <canvas id="rippleCanvas" class="ripple-container"></canvas>
     <form id="form1" runat="server">
         <div class="login-container">
-            <h2>Đăng Nhập 🌸</h2>
+            <h2>Đăng Nhập</h2>
+            <div class="input-box">
+                <asp:TextBox ID="txtUsername" runat="server" CssClass="aspNetTextBox" placeholder="Tên đăng nhập"></asp:TextBox>
+            </div>
+            <div class="input-box">
+                <asp:TextBox ID="txtPassword" runat="server" TextMode="Password" CssClass="aspNetTextBox" placeholder="Mật khẩu"></asp:TextBox>
+            </div>
+            <asp:Button ID="btnLogin" runat="server" Text="Đăng Nhập" CssClass="aspNetButton" OnClick="btnLogin_Click" />
 
-            <asp:TextBox ID="txtUsername" runat="server" CssClass="aspNetTextBox" placeholder="Tên đăng nhập"></asp:TextBox><br />
-            <asp:TextBox ID="txtPassword" runat="server" TextMode="Password" CssClass="aspNetTextBox" placeholder="Mật khẩu"></asp:TextBox><br />
-
-            <asp:Button ID="btnLogin" runat="server" Text="Đăng Nhập" CssClass="aspNetButton" OnClick="btnLogin_Click" /><br />
-
-            <asp:Label ID="lblMessage" runat="server" CssClass="error"></asp:Label>
-
-            <p><a href="ForgotPassword.aspx">Quên mật khẩu?</a></p>
-            <p>Bạn chưa có tài khoản? <a href="Register.aspx">Đăng ký</a></p>
+             <asp:Label ID="lblMessage" runat="server" CssClass="error"></asp:Label>
+            <div class="links">
+                <p><a href="ForgotPassword.aspx">Quên mật khẩu?</a></p>
+                <p>Bạn chưa có tài khoản? <a href="Register.aspx">Đăng ký</a></p>
+            </div>
         </div>
     </form>
-
+    <div class="login-reflection"></div>
     <script>
-        const leafCount = 50; // Số lượng hoa rơi
-        const container = document.body;
+        const canvas = document.getElementById("rippleCanvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        let ripples = [];
 
-        for (let i = 0; i < leafCount; i++) {
-            const leaf = document.createElement("div");
-            leaf.classList.add("leaf");
-            leaf.textContent = "🌸"; // Biểu tượng hoa
-            leaf.style.left = Math.random() * 100 + "vw";
-            leaf.style.animationDuration = Math.random() * 5 + 5 + "s";
-            leaf.style.fontSize = Math.random() * 1.5 + 1 + "em";
-            leaf.style.opacity = Math.random();
-            container.appendChild(leaf);
+        function drawRipple() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.strokeStyle = "cyan";
+            ctx.lineWidth = 2;
+            ripples.forEach((ripple, index) => {
+                ctx.beginPath();
+                ctx.arc(ripple.x, ripple.y, ripple.radius, 0, Math.PI * 2);
+                ctx.stroke();
+                ripple.radius += 1.5;
+                if (ripple.radius > 100) ripples.splice(index, 1);
+            });
+            requestAnimationFrame(drawRipple);
         }
+
+        canvas.addEventListener("mousemove", (event) => {
+            ripples.push({ x: event.clientX, y: event.clientY, radius: 5 });
+        });
+        drawRipple();
     </script>
 </body>
 </html>

@@ -16,7 +16,7 @@ namespace WebQLDaoTao
             {
                 if (Session["VaiTro"] == null)
                 {
-                    Response.Redirect("Login.aspx"); // Nếu chưa đăng nhập thì về trang Login
+                    Response.Redirect("Default.aspx"); // Nếu chưa đăng nhập thì về trang Login
                 }
                 //lien ket du lieu cho gvMonhoc
                 LoadData();

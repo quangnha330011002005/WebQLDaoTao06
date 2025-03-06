@@ -18,9 +18,13 @@ namespace WebQLDaoTao
             }
             else
             {
-                lblUser.Text = "Chưa đăng nhập";
+                lblUser.Text = "<a href='Login.aspx' style='color: red; text-decoration: none;'> Đăng Nhập</a>";
+                btnLogout.Visible = false;
             }
+           
         }
+
+
 
         protected void btnLogout_Click(object sender, EventArgs e)
         {
@@ -28,6 +32,22 @@ namespace WebQLDaoTao
             Session.Clear();
             Session.Abandon();
             Response.Redirect("Login.aspx"); // Chuyển về trang đăng nhập
+            
         }
+
+
+        protected void SwitchAccount_Click(object sender, EventArgs e)
+        {
+        //    LinkButton btn = (LinkButton)sender;
+        //    string selectedUser = btn.CommandArgument;
+
+        //    // Cập nhật lại tài khoản hiện tại
+        //    Session["CurrentUser"] = selectedUser;
+
+        //    // Chuyển hướng về trang chính
+        //    Response.Redirect("Default.aspx");
+        }
+
+       
     }
 }

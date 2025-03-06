@@ -32,21 +32,14 @@ namespace WebQLDaoTao
 
             if (tk != null)
             {
+                // ✅ Lưu thông tin tài khoản vào Session
                 Session["Username"] = tk.Tendangnhap;
-                Session["VaiTro"] = tk.VaiTro; // ✅ Lưu vai trò vào session
+                Session["VaiTro"] = tk.VaiTro;
 
-                if (tk.VaiTro == "QTV")
-                {
-                    Response.Redirect("Default.aspx");
-                }
-                else if (tk.VaiTro == "Khach")
-                {
-                    Response.Redirect("Default.aspx");
-                }
-                else
-                {
-                    Response.Write("<script>alert('Chưa có quyền truy cập.');window.location='Login.aspx';</script>");
-                }
+              
+
+                // ✅ Chuyển hướng không bị mất Session
+                Response.Redirect("Default.aspx");
             }
             else
             {
